@@ -1,0 +1,46 @@
+<!-- da error -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime.js Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Anime.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+      #animation .text-xl {
+  font-size: 1.5rem;
+  color: currentColor;
+  letter-spacing: 0.06em;
+}
+    </style>
+</head>
+<body>
+    <div class="large grid centered square-grid">
+  <h2 class="text-xl">HELLO WORLD</h2>
+</div>
+<script>
+    const animation = animate(targets, parameters);
+    const { chars } = text.split('h2', { words: false, chars: true });
+
+animate(chars, {
+  // Property keyframes
+  y: [
+    { to: '-2.75rem', ease: 'outExpo', duration: 600 },
+    { to: 0, ease: 'outBounce', duration: 800, delay: 100 }
+  ],
+  // Property specific parameters
+  rotate: {
+    from: '-1turn',
+    delay: 0
+  },
+  delay: stagger(50),
+  ease: 'inOutCirc',
+  loopDelay: 1000,
+  loop: true
+});
+</script>
+  
+</body>
+</html>

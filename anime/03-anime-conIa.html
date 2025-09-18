@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime.js Example Corregido</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .text-xl {
+            font-size: 1.8rem;
+            color: currentColor;
+            letter-spacing: 0.06em;
+            margin: 0;
+            padding: 10px;
+        }
+        
+        .animated-text {
+            display: inline-block;
+        }
+        
+        .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .explanation {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .explanation h2 {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            padding: 12px 24px;
+            margin: 20px 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Animación con Anime.js</h1>
+        
+        <div class="grid">
+            <div class="card">
+                <h2 class="text-xl" id="animatedText">HELLO WORLD</h2>
+            </div>
+            
+            <div class="card">
+                <h2 class="text-xl" id="secondText">ANIME.JS</h2>
+            </div>
+        </div>
+        
+        <div>
+            <button class="button" onclick="restartAnimation()">Reiniciar Animación</button>
+            <button class="button" onclick="toggleAnimation()">Pausar/Reanudar</button>
+        </div>
+        
+        <div class="explanation">
+            <h2>¿Qué se corrigió?</h2>
+            <ul>
+                <li><strong>Elementos objetivo:</strong> Se agregaron elementos HTML con ID para animar</li>
+                <li><strong>Sintaxis:</strong> Se corrigió el uso de "animate" a "anime"</li>
+                <li><strong>Manejo de texto:</strong> Se implementó correctamente la división de caracteres</li>
+                <li><strong>Función stagger:</strong> Se implementó correctamente el efecto de retardo</li>
+                <li><strong>Estructura:</strong> Se mejoró el diseño visual de la página</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Función para dividir el texto en caracteres
+        function splitTextIntoChars(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            element.textContent = '';
+            
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.className = 'char';
+                element.appendChild(span);
+            }
+            
+            return element.querySelectorAll('.char');
+        }
+        
+        // Función stagger personalizada
+        function stagger(delay, start = 0) {
+            return function(el, i) {
+                return start + i * delay;
+            };
+        }
+        
+        // Preparar los textos para animación
+        const chars1 = splitTextIntoChars('animatedText');
+        const chars2 = splitTextIntoChars('secondText');
+        
+        // Crear la animación
+        const animation = anime.timeline({
+            loop: true,
+            autoplay: true
+        });
+        
+        animation
+        .add({
+            targets: chars1,
+            translateY: [
+                { value: '-2.75rem', easing: 'easeOutExpo', duration: 600 },
+                { value: 0, easing: 'easeOutBounce', duration: 800 }
+            ],
+            rotate: {
+                value: '-=1turn',
+                easing: 'easeInOutCirc',
+                duration: 1000
+            },
+            opacity: {
+                value: 1,
+                duration: 200
+            },
+            delay: stagger(100),
+            duration: 1500
+        })
+        .add({
+            targets: chars2,
+            translateY: [
+                { value: '-2.75rem', easing: 'easeOutExpo', duration: 600 },
+                { value: 0, easing: 'easeOutBounce', duration: 800 }
+            ],
+            rotate: {
+                value: '+=1turn',
+                easing: 'easeInOutCirc',
+                duration: 1000
+            },
+            opacity: {
+                value: 1,
+                duration: 200
+            },
+            delay: stagger(100),
+            duration: 1500
+        }, '-=500');
+        
+        // Funciones de control
+        function restartAnimation() {
+            animation.restart();
+        }
+        
+        function toggleAnimation() {
+            if (animation.paused) {
+                animation.play();
+            } else {
+                animation.pause();
+            }
+        }
+    </script>
+</body>
+</html>

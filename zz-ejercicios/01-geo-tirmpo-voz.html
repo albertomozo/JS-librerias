@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tiempo con voz</title>
+</head>
+<body>
+  <h1>¿Qué tiempo hace?</h1>
+  <button id="btnTiempo">Dime el tiempo</button>
+     <p id="resultado"></p>
+  <img id="icon" alt="Icono del tiempo" style="display:none">
+    <script src="01-config.js"></script>
+  <script>
+    const btn = document.getElementById("btnTiempo");
+
+    btn.addEventListener("click", () => {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+
+          // API de OpenWeatherMap (necesitas tu API KEY)
+          //const apiKey = "*************************";
+          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${apiKey}`;
+
+          try {
+            const resp = await fetch(url);
+            const data = await resp.json();
+            console.log(`🟩 datos `);
+            console.log(data);
+            
+            const ciudad = data.name;
+            const temp = data.main.temp;
+            const descripcion = data.weather[0].description;
+            const icono = data.weather[0].icon;
+
+            const mensaje = `En ${ciudad} la temperatura es de ${temp} grados y está ${descripcion}. `;
+            icon.src = `https://openweathermap.org/img/wn/${icono}@2x.png`;
+            icon.style.display = "block";
+
+            // Mostrar en pantalla
+            alert(mensaje);
+
+            // Decirlo en voz alta
+            const utter = new SpeechSynthesisUtterance(mensaje);
+            utter.lang = "es-ES";
+            speechSynthesis.speak(utter);
+
+          } catch (err) {
+            console.error("Error al obtener el tiempo:", err);
+          }
+        });
+      } else {
+        alert("Tu navegador no soporta geolocalización.");
+      }
+    });
+  </script>
+</body>
+</html>

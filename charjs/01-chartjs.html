@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Char.js</title>
+    <style>
+       .container{
+            padding: 100px;
+            font-family: helvetica;
+        }
+        
+        
+    </style>
+    <!--  https://www.chartjs.org/docs/latest/getting-started/   -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+   <div id="capa"></div>
+   <div class="container">
+       
+       <h1>Char.js</h1>
+       <p>
+          LIbreria de Gráficos
+        </p>         
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>                
+</div> 
+<script>
+    const labels = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+    ];
+  
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'My First dataset',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: [0, 10, 5, 2, 20, 30, 45],
+      },
+      {
+        label: 'My second dataset',
+        backgroundColor: 'rgb(100, 99, 132)',
+        borderColor: 'rgb(100, 99, 132)',
+        data: [7, 7, 6, 7, 3, 45, 34],
+      }       
+    ]
+    };
+  
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+           scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+            }
+
+
+      }
+    };
+
+    const myChart = new Chart(document.getElementById('myChart'), config);
+  </script>  
+</body>
+</html>

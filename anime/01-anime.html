@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo con Anime.js</title>
+</head>
+<body>
+  <h1 id="titulo">Hola Mundo</h1>
+
+  <!-- Incluir la librería desde un CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+  <script>
+    // Usar la librería
+    anime({
+      targets: '#titulo',
+      translateX: 250,
+      duration: 2000
+    });
+  </script>
+</body>
+</html>
