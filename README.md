@@ -41,7 +41,7 @@ Este repositorio contiene ejemplos prácticos de uso de librerías JavaScript mo
 
 ### 3. Ejercicios con APIs del Navegador (`zz-ejercicios/`)
 
-- **01-geo-tirmpo-voz.html**: Consulta el tiempo usando geolocalización y lo lee en voz alta.
+- **01-geo-tiempo-voz.html**: Consulta el tiempo usando geolocalización y lo lee en voz alta.
 - **01-config.js**: Archivo de configuración con la API Key.
 - **01-geo-tiempo-voz.md**: Guía y explicación del ejercicio.
 
