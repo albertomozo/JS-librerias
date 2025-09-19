@@ -1,44 +1,3 @@
- **guía rápida de EmailJS aplicada a un carrito en `localStorage`**. 
- 
- La idea es:
-
-1. El usuario añade productos → se almacenan en `localStorage` bajo la clave `carrito`.
-2. Al pulsar *"Finalizar pedido"*, recogemos el contenido del carrito.
-3. Con **EmailJS**, enviamos un correo al cliente (o al administrador) con el detalle.
-
----
-
-## 🔹 Paso 1. Configurar EmailJS
-
-1. Entra en [https://www.emailjs.com](https://www.emailjs.com).
-2. Crea una cuenta gratuita.
-3. Obtén:
-
-   * **Service ID**
-   * **Template ID**
-   * **Public Key**
-     (se ven en tu panel EmailJS).
-
----
-
-## 🔹 Paso 2. Crear plantilla en EmailJS
-
-En tu plantilla (`template_xxx`) defines variables como:
-
-```text
-Cliente: {{cliente}}
-Email: {{email}}
-Pedido:
-{{pedido}}
-```
-
----
-
-## 🔹 Paso 3. Código HTML + JS
-
-Aquí un ejemplo sencillo:
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -47,7 +6,7 @@ Aquí un ejemplo sencillo:
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function() {
-      emailjs.init("TU_PUBLIC_KEY"); // Reemplaza con tu Public Key
+      emailjs.init("OSqWAA6uYZbvJTbor"); // Reemplaza con tu Public Key
     })();
   </script>
 </head>
@@ -80,9 +39,11 @@ Aquí un ejemplo sencillo:
       const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
       // Formatear pedido
+
       let pedidoTexto = carrito.map(item =>
         `${item.producto} - Cantidad: ${item.cantidad} - Precio: ${item.precio}€`
       ).join("\n");
+      console.log("🟩 Formato del pedido:\n", pedidoTexto);
 
       // Parámetros para la plantilla de EmailJS
       const templateParams = {
@@ -90,9 +51,10 @@ Aquí un ejemplo sencillo:
         email: correo,
         pedido: pedidoTexto
       };
+      console.log("🟩 Datos del pedido:", templateParams);
 
       // Enviar con EmailJS
-      emailjs.send("TU_SERVICE_ID", "TU_TEMPLATE_ID", templateParams)
+      emailjs.send("service_exqwrqo", "template_e6d2qlf", templateParams)
         .then(function(response) {
           alert("✅ Pedido enviado correctamente");
           console.log("SUCCESS!", response.status, response.text);
@@ -105,22 +67,3 @@ Aquí un ejemplo sencillo:
   </script>
 </body>
 </html>
-```
-
----
-
-## 🔹 Paso 4. Ajustes recomendados
-
-* En la plantilla de EmailJS, organiza bien el **pedido** en HTML (puedes usar `<ul>` en lugar de texto plano).
-* Si quieres enviar también el **total**, calcula antes de enviar:
-
-```js
-const total = carrito.reduce((acc, item) => acc + item.cantidad * item.precio, 0);
-pedidoTexto += `\nTOTAL: ${total} €`;
-```
-
-* Para producción, considera un backend (Node, PHP, etc.) si necesitas más seguridad (para no exponer `PUBLIC_KEY` y `SERVICE_ID`).
-
----
-capturas pantalla   https://docs.google.com/presentation/d/1rTIUbxueAOxUOdXNKrYtGgCswSCpzSENOLpReap8E5A/edit?slide=id.g11d7e37d90c_0_0#slide=id.g11d7e37d90c_0_0
-
