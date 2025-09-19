@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <title>Pedido con EmailJS</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="01-config.js"></script>
   <script>
     (function() {
-      emailjs.init("OSqWAA6uYZbvJTbor"); // Reemplaza con tu Public Key
+      emailjs.init(PUBLIC_KEY); // Reemplaza con tu Public Key
     })();
   </script>
 </head>
@@ -54,7 +55,7 @@
       console.log("🟩 Datos del pedido:", templateParams);
 
       // Enviar con EmailJS
-      emailjs.send("service_exqwrqo", "template_e6d2qlf", templateParams)
+      emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
         .then(function(response) {
           alert("✅ Pedido enviado correctamente");
           console.log("SUCCESS!", response.status, response.text);
